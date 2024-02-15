@@ -4,7 +4,8 @@ Implementing custom implementation of RAG without packages such as Langchain
 ## Steps
 - Extract text data
 - Chunk it
-- Store it in a database
+- Create Embeddings
+- Store chunks with embeddings in a database
 - Perform a retrieval using semantic search
 - Insert relevant context into the LLM prompt
 
