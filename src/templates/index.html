@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieval-Augmented Generation Demo</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Retrieval-Augmented Generation Demo Using Magic The Gathering Complete Rules</h1>
+    <div>
+        <label for="queryInput">Enter your query:</label>
+        <input type="text" id="queryInput" placeholder="Type your query here...">
+        <button id="submitQuery">Submit</button>
+    </div>
+    <div id="responseSection">
+        <h2>Model Response</h2>
+        <p id="modelResponse">The model's response will appear here after you submit a query.</p>
+    </div>
+    <div id="chunksSection">
+        <h2>Retrieved Chunks</h2>
+        <ul id="chunksList">Retrieved chunks will be listed here.</ul>
+    </div>
+
+    <script>
+        document.getElementById("submitQuery").addEventListener("click", function() {
+            var query = document.getElementById("queryInput").value;
+            fetch('/rag', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("modelResponse").textContent = data.response;
+                const chunksList = document.getElementById("chunksList");
+                chunksList.innerHTML = ''; // Clear existing list
+                data.chunks.forEach(chunk => {
+                    const li = document.createElement("li");
+                    li.textContent = chunk[1]; // Assuming chunk format is [id, text]
+                    chunksList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

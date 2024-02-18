@@ -33,7 +33,6 @@ def chunk_embedding(chunk, model="text-embedding-3-small"):
     # Create the embeddings
     embeddings = client.embeddings.create(input=[chunk], model=model).data[0].embedding
     print(f"Embedding created for chunk: {chunk[:50]}...")
-    print(embeddings[:5])
     return embeddings
 
 def store_chunks(chunks, db_path='rag_data.db'):

@@ -4,7 +4,9 @@ from embedding_saving import chunk_embedding
 import numpy as np
 
 def cosine_similarity(vec1, vec2):
-    """Compute the cosine similarity between two vectors."""
+    '''
+    Compute the cosine similarity between two vectors.
+    '''
     dot_product = np.dot(vec1, vec2)
     norm_vec1 = np.linalg.norm(vec1)
     norm_vec2 = np.linalg.norm(vec2)
@@ -65,3 +67,6 @@ def get_chunks_by_similarity(input_query, db_path='rag_data.db', top_n=3):
 if __name__ == '__main__':
     best_chunks = get_chunks_by_similarity("How do I cast a spell?", top_n=3)
     print(best_chunks)
+    print(f"Chunk 1: {best_chunks[0][1]}")
+    print(f"Chunk 2: {best_chunks[1][1]}")
+    print(f"Chunk 3: {best_chunks[2][1]}")
