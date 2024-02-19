@@ -29,7 +29,7 @@ def retrieval_augmented_generation():
 
     # Retrueve number of chunks to retreive
     if 'num_chunks' in request.json:
-        top_n = request.json['num_chunks']
+        top_n = int(request.json['num_chunks'])
     else:
         top_n = 3
 
