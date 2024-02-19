@@ -36,13 +36,11 @@ def retrieval_augmented_generation():
     # Retrieve the most similar chunks from the database
     best_chunks = get_chunks_by_similarity(input_query, top_n=top_n)
     print(f"Retrieved {len(best_chunks)} chunks.")
-    for chunk in best_chunks:
-        print(chunk[1])
 
     # Prompt the model with the input query and the best chunks
-    response = prompt_gpt(input_query, best_chunks)
+    rag_response, basic_response = prompt_gpt(input_query, best_chunks)
 
-    return jsonify({'response': response, 'chunks': best_chunks})
+    return jsonify({'rag_response': rag_response, 'basic_response': basic_response, 'chunks': best_chunks})
     
 if __name__ == '__main__':
     app.run(debug=True)

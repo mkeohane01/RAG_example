@@ -8,14 +8,27 @@
 </head>
 <body>
     <h1>Retrieval-Augmented Generation Demo Using Magic The Gathering Complete Rules</h1>
-    <div>
-        <label for="queryInput">Enter your query:</label>
-        <input type="text" id="queryInput" placeholder="Type your query here...">
+    <div id="inputSection" class="input-container">
+        <div class="input-flex-container">
+            <div class="input-group">
+                <label for="chunk_num">Number of chunks to retrieve:</label>
+                <input type="number" id="chunk_num" class="input-small" placeholder="3" value="3" min="1" max="10" step="1">
+            </div>
+            <div class="input-group input-large">
+                <label for="queryInput">Enter your question about MTG rules:</label>
+                <input type="text" id="queryInput" class="input-grow" placeholder="Type your query here..." required>
+            </div>
+        </div>
         <button id="submitQuery">Submit</button>
     </div>
+    
     <div id="responseSection">
-        <h2>Model Response</h2>
-        <p id="modelResponse">The model's response will appear here after you submit a query.</p>
+        <h2>Model Response using RAG</h2>
+        <p id="ragResponse">GPT 3.5 turbo response using the retrieved chunks.</p>
+    </div>
+    <div id="responseSection">
+        <h2>Model Response without using RAG</h2>
+        <p id="basicResponse">GPT 3.5 turbo response without using those retrieved chunks.</p>
     </div>
     <div id="chunksSection">
         <h2>Retrieved Chunks</h2>
@@ -34,12 +47,13 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById("modelResponse").textContent = data.response;
+                document.getElementById("ragResponse").textContent = data.rag_response;
+                document.getElementById("basicResponse").textContent = data.basic_response;
                 const chunksList = document.getElementById("chunksList");
                 chunksList.innerHTML = ''; // Clear existing list
                 data.chunks.forEach(chunk => {
                     const li = document.createElement("li");
-                    li.textContent = chunk[1]; // Assuming chunk format is [id, text]
+                    li.textContent = chunk[1]; // chunk format is [id, text]
                     chunksList.appendChild(li);
                 });
             })

@@ -1,0 +1,127 @@
+body {
+    font-family: 'Cinzel', serif; /* A font that might fit the MTG theme */
+    background-color: #0e1a25; /* Dark background for a mystical feel */
+    color: #f4f4f4; /* Light text for contrast */
+    margin: 20px;
+    padding: 0;
+}
+
+h1 {
+    color: #ffd700; /* Gold color for headings */
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#form {
+    background-color: #123; /* Slightly lighter background for the form area */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+label {
+    color: #aad; /* Lighter text color for labels */
+    display: block; /* Ensure inputs are on new lines */
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2979ff; /* Bright blue to stand out */
+    color: white;
+    cursor: pointer;
+    font-size: 16px; /* Larger font size for readability */
+    display: block; /* Make the button block level to center it */
+    margin: 20px auto; /* Center the button */
+}
+
+button:hover {
+    background-color: #5599ff; /* Lighter blue on hover */
+}
+
+#responseSection, #chunksSection {
+    background-color: #022; /* Dark backgrounds for sections */
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+h2 {
+    color: #ffd700; /* Gold color for subheadings */
+}
+
+#chunksList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#chunksList li {
+    background-color: #034; /* Even darker background for list items */
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the items vertically */
+    gap: 10px; /* Space between the flex container and the button */
+}
+
+.input-flex-container {
+    display: flex;
+    width: 100%; /* Ensure the container takes full width */
+    align-items: flex-start; /* Align items at the start */
+    gap: 10px; /* Space between inputs */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column; /* Stack label and input vertically */
+}
+
+.input-small {
+    flex-basis: 15px; /* Starting width for the number input */
+    flex-grow: 0; /* Do not allow the number input to grow */
+}
+
+.input-large {
+    flex: 1; /* Allow this div to take up the remaining space */
+}
+
+.input-grow {
+    width: 95%; /* Make the text input grow to fill its container */
+}
+
+#submitQuery {
+    padding: 10px 20px; /* Adjust padding to match the height of inputs */
+    width: fit-content; /* Adjust button width to content */
+    margin: 0 auto; /* Center the button horizontally */
+}
+
+@media (max-width: 600px) { /* Adjust layout for smaller screens */
+    .input-flex-container {
+        flex-direction: column; /* Stack inputs vertically on small screens */
+    }
+
+    .input-small, .input-grow {
+        width: 95%; /* Full width on small screens */
+    }
+
+    #submitQuery {
+        width: 25%; /* Button full width on small screens */
+    }
+}
+
+input[type="text"], input[type="number"] {
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #335; /* Border color */
+    border-radius: 4px;
+    background-color: #001a33; /* Dark input fields for depth */
+    color: #fff; /* White text for readability */
+}

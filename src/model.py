@@ -20,10 +20,11 @@ def prompt_gpt(prompt, chunks, model="gpt-3.5-turbo", temp=0.7, max_tok=300):
     for chunk in chunks:
         context += chunk[1] + "\n"
 
-    # Build system
+    # Build system for MTG bot
     system = "Answer questions factucally as a judge for a Magic: The Gathering tournament."
-    # Generate the response from gpt api
-    response = client.chat.completions.create(
+
+    # Generate the response from gpt api with RAG
+    rag_response = client.chat.completions.create(
         messages=[
             {
                 "role": "system",
@@ -42,8 +43,24 @@ def prompt_gpt(prompt, chunks, model="gpt-3.5-turbo", temp=0.7, max_tok=300):
             temperature=temp,  
             max_tokens=max_tok  
         )
+   # Generate the response from gpt api without RAG
+    basic_response = client.chat.completions.create(
+        messages=[
+            {
+                "role": "system",
+                "content": system
+            },
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+            model=model,
+            temperature=temp,  
+            max_tokens=max_tok  
+        ) 
    
-    return response.choices[0].message.content
+    return rag_response.choices[0].message.content, basic_response.choices[0].message.content
 
 
 if __name__ == '__main__':
