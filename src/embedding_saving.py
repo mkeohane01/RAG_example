@@ -6,7 +6,7 @@ import pickle
 
 dotenv.load_dotenv()
 
-def setup_sqlite_db(db_path='rag_data.db', remove_existing=False):
+def setup_sqlite_db(db_path='rag_data.db', remove_existing=True):
     '''
     Creates the database to store the text chunks
     '''
@@ -35,12 +35,12 @@ def chunk_embedding(chunk, model="text-embedding-3-small"):
     print(f"Embedding created for chunk: {chunk[:50]}...")
     return embeddings
 
-def store_chunks(chunks, db_path='rag_data.db'):
+def store_chunks(chunks, db_path='rag_data.db', remove_existing=False):
     '''
     Stores the chunks in the database
     param: chunks - list of text chunks
     '''
-    db = setup_sqlite_db()
+    db = setup_sqlite_db(db_path, remove_existing)
     conn = sqlite3.connect(db)
     c = conn.cursor()
     for chunk in chunks:
@@ -55,6 +55,6 @@ def store_chunks(chunks, db_path='rag_data.db'):
 if __name__ == '__main__':
     pdf_path = './pdfs/MagicCompRules.pdf'
     text = extract_text_from_pdf(pdf_path)
-    chunks = chunk_text(text, 500, True)
-    store_chunks(chunks)
+    chunks = chunk_text(text, 700, True)
+    store_chunks(chunks, db_path='rag_data.db', remove_existing=True)
     print("Chunks stored in the database.")

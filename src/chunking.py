@@ -1,6 +1,6 @@
 import PyPDF2
 
-def extract_text_from_pdf(pdf_path):
+def extract_text_from_pdf(pdf_path, skipfirst4=True):
     '''
     Extracts text from a PDF file
     param: pdf_path - path to the PDF file
@@ -9,7 +9,15 @@ def extract_text_from_pdf(pdf_path):
     with open(pdf_path, 'rb') as file:
         reader = PyPDF2.PdfReader(file)
         text = ''
+        # Skip the first 4 pages if desired. Specifc to the MagicCompRules.pdf table of contents
+        if skipfirst4:
+            skip = 4
+        else:
+            skip = 0
         for page in reader.pages:
+            if skip > 0:
+                skip -= 1
+                continue
             text += page.extract_text()
     print(f"Text extracted from {pdf_path}.")
     return text
@@ -20,7 +28,7 @@ def chunk_text(text, chunk_size, split_newlines=True):
     If split_newlines is True, it tries to split at the newline closest to the end of the chunk size without exceeding it.
     
     :param text: Text to be split.
-    :param chunk_size: Desired size of each chunk.
+    :param chunk_size: Desired max size of each chunk.
     :param split_newlines: Whether to prefer splitting the text at newlines.
     :return: List of text chunks.
     '''
@@ -34,12 +42,12 @@ def chunk_text(text, chunk_size, split_newlines=True):
             end = start + chunk_size
             # If splitting at newlines, adjust end to the last newline before the chunk would otherwise end
             if split_newlines:
-                newline_end = text.rfind('\n', start, end)
+                newline_end = text.rfind('.\n', start, end)
                 if newline_end != -1:
                     end = newline_end + 1
                 else:
-                    # If no suitable newline, try to break at a space or stick with the hard limit
-                    space_end = text.rfind(' ', start, end)
+                    # If no suitable newline, try to break at the end of sentence or stick with the hard limit
+                    space_end = text.rfind('.', start, end)
                     end = space_end + 1 if space_end != -1 else end
         
         chunks.append(text[start:end])
@@ -52,7 +60,7 @@ def chunk_text(text, chunk_size, split_newlines=True):
 if __name__ == '__main__':
     pdf_path = './pdfs/MagicCompRules.pdf'
     text = extract_text_from_pdf(pdf_path)
-    chunks = chunk_text(text, 500, True)
+    chunks = chunk_text(text, 700, True)
     for i, chunk in enumerate(chunks):
         print(f'Chunk {i+1}:\n{chunk}\n')
         if i == 10:
