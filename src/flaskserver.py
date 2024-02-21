@@ -34,7 +34,7 @@ def retrieval_augmented_generation():
         top_n = 3
 
     # Retrieve the most similar chunks from the database
-    best_chunks = get_chunks_by_similarity(input_query, top_n=top_n)
+    best_chunks = get_chunks_by_similarity(input_query, db_path='rag_data_updated.db', top_n=top_n)
     print(f"Retrieved {len(best_chunks)} chunks.")
 
     # Prompt the model with the input query and the best chunks

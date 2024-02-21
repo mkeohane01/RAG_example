@@ -53,8 +53,8 @@ def store_chunks(chunks, db_path='rag_data.db', remove_existing=False):
 
 
 if __name__ == '__main__':
-    pdf_path = './pdfs/MagicCompRules.pdf'
+    pdf_path = './pdfs/MagicCompRules_2024.pdf'
     text = extract_text_from_pdf(pdf_path)
     chunks = chunk_text(text, 700, True)
-    store_chunks(chunks, db_path='rag_data.db', remove_existing=True)
+    store_chunks(chunks, db_path='rag_data_updated.db', remove_existing=True)
     print("Chunks stored in the database.")
